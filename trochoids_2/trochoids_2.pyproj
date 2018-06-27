@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d0176af3-c697-47e5-a631-584e87548b1f</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>LinePLotUpdate.py</StartupFile>
+    <StartupFile>qtGraphTrochoids.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -27,6 +27,10 @@
     <Compile Include="autoRange.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="qtGraphTrochoids.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="pyqtgraphTest.py" />
     <Compile Include="ScrollingPlot.py">
       <SubType>Code</SubType>
     </Compile>
