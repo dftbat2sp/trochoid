@@ -2,15 +2,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>d0176af3-c697-47e5-a631-584e87548b1f</ProjectGuid>
+    <ProjectGuid>d1dafd40-7efc-4a7e-8eb5-5b1a09cc1d43</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>LinePLotUpdate.py</StartupFile>
+    <StartupFile>PyQTGraph.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>trochoids_2</Name>
-    <RootNamespace>trochoids_2</RootNamespace>
+    <Name>PyQTGraph</Name>
+    <RootNamespace>PyQTGraph</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,16 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="LinePLotUpdate.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="autoRange.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="ScrollingPlot.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="trochoids_2.py" />
+    <Compile Include="PyQTGraph.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
