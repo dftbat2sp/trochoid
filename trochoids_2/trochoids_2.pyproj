@@ -27,6 +27,9 @@
     <Compile Include="autoRange.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="basicExamples.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="qtGraphTrochoids.py">
       <SubType>Code</SubType>
     </Compile>
