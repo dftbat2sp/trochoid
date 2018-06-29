@@ -8,14 +8,16 @@ win = pg.GraphicsWindow()
 win.setWindowTitle('Trochoids')
 win.resize(1000,1000)
 
-bigR = 125
-smallR = 100
-pointR = 100
+bigR = 222
+smallR = 123
+pointR = 90
 
 angle = 0
 
-theta = 0.01
+theta = 0.05
 steps = int(1000 * 3.14 / theta)
+
+axisRange = 200
 
 dataX = np.empty(steps)
 dataY = np.empty(steps)
@@ -45,10 +47,9 @@ p1 = win.addPlot(title="testing")
 #p1.setDownsampling(mode='peak')
 #p1.setClipToView(True)
 p1.showGrid(x=True, y=True)
-p1.setRange(xRange=[-150,150], yRange=[-150,150])
+p1.setRange(xRange=[-axisRange,axisRange], yRange=[-axisRange,axisRange])
 p1.plot(dataX, dataY)
 p1.plot(circleX, circleY)
-
 ## Start Qt event loop unless running in interactive mode or using pyside.
 if __name__ == '__main__':
     import sys
