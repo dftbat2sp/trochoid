@@ -46,7 +46,7 @@ p4.setClipToView(True)
 p3.setRange(xRange=[-100, 0])
 p3.setLimits(xMax=0)
 curve3 = p3.plot()
-curve4 = p4.plot()
+curve4 = p4.plot() 
 
 data3 = np.empty(100)
 ptr3 = 0

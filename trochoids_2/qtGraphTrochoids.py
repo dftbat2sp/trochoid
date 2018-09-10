@@ -10,7 +10,7 @@ win.setWindowTitle('Trochoids')     # set title
 win.resize(1000,1000)               # set window size
 
 # Circle sizes
-statRad = 144               # Stationary Circle size
+statRad = 120               # Stationary Circle size
 rotRad = 74                 # moving circle size
 drawPointRad = rotRad / 2     # location from center of moving circle to draw
 
@@ -34,7 +34,7 @@ rotRadY = np.empty(steps) # corresponding y points
 
 # set graph parameters
 p1 = win.addPlot(title="testing")           # title
-p1.setDownsampling(mode='peak') # reduce drawing load
+#p1.setDownsampling(mode='peak') # reduce drawing load
 #p1.setClipToView(True)
 p1.showGrid(x=True, y=True)                 # print grid
 p1.setRange(xRange=[-axisRange,axisRange],  # set axis range
@@ -43,7 +43,7 @@ p1.setRange(xRange=[-axisRange,axisRange],  # set axis range
 #don't know what this does yet, used for "live" drawing
 #curve = p1.plot()
 angle = startAngle
-# print stationary circle
+#print stationary circle
 for t in range(0,130):
     x = statRad * cos(angle)
     y = statRad * sin(angle)
@@ -81,10 +81,7 @@ def update1():
     curve.setData(rotRadX[:t],rotRadY[:t])
     # move calculation point clockwise theta
     angle+=theta  
-    t += 1
-#      
-
-
+    t += 1      
 
 def update():
     update1()
