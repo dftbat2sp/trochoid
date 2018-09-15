@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d0176af3-c697-47e5-a631-584e87548b1f</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>qtGraphTrochoids.py</StartupFile>
+    <StartupFile>examples\TrotBot Stationary.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,23 +21,27 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="LinePLotUpdate.py">
+    <Compile Include="examples\LinePLotUpdate.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="autoRange.py">
+    <Compile Include="examples\autoRange.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="basicExamples.py">
+    <Compile Include="examples\basicExamples.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="qtGraphTrochoids.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="pyqtgraphTest.py" />
-    <Compile Include="ScrollingPlot.py">
+    <Compile Include="examples\pyqtgraphTest.py" />
+    <Compile Include="examples\ScrollingPlot.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="trochoids_2.py" />
+    <Compile Include="examples\TrotBot Stationary.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="examples\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
