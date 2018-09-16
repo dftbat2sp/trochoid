@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d0176af3-c697-47e5-a631-584e87548b1f</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>examples\TrotBot Stationary.py</StartupFile>
+    <StartupFile>qtGraphTrochoids.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,6 +30,12 @@
     <Compile Include="examples\basicExamples.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="examples\temp_example.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="matPlotLibTrochoid.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="qtGraphTrochoids.py">
       <SubType>Code</SubType>
     </Compile>
@@ -38,7 +44,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="trochoids_2.py" />
-    <Compile Include="examples\TrotBot Stationary.py" />
+    <Compile Include="examples\matplotlib_examples.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="examples\" />

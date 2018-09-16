@@ -35,7 +35,7 @@ rotRadY = np.empty(steps) # corresponding y points
 # set graph parameters
 p1 = win.addPlot(title="testing")           # title
 #p1.setDownsampling(mode='peak') # reduce drawing load
-#p1.setClipToView(True)
+                                 #p1.setClipToView(True)
 p1.showGrid(x=True, y=True)                 # print grid
 p1.setRange(xRange=[-axisRange,axisRange],  # set axis range
             yRange=[-axisRange,axisRange])
@@ -44,33 +44,37 @@ p1.setRange(xRange=[-axisRange,axisRange],  # set axis range
 #curve = p1.plot()
 angle = startAngle
 #print stationary circle
-for t in range(0,130):
+bigCirc = pg.PlotCurveItem(pen=(1))
+p1.addItem(bigCirc)
+#bigCirc.setPos(0,0)
+
+maxRange = 10
+
+for t in range(0,maxRange):
     x = statRad * cos(angle)
     y = statRad * sin(angle)
-    7
+    
     statRadX[t] = x
     statRadY[t] = y
-
-    print("x: ",x,", y: ",y)
 
     angle += theta
 
 # draw stationary circle
-p1.plot(statRadX, statRadY)
+bigCirc.setData(x=statRadX[:maxRange], y=statRadY[:maxRange], connect="finite")
 
 # reset starting angle
 angle = startAngle
 
 # print fancy things
-curve = p1.plot()
+spiro = pg.PlotCurveItem(pen=(2))
+p1.addItem(spiro)
 #for t in range(0,steps):
-
 data3 = np.empty(100)
 ptr3 = 0
 t = 0
 
 def update1():
-    global rotRadX, rotRadY, curve, angle, ptr3, t
+    global rotRadX, rotRadY, spiro, angle, ptr3, t
     # hypotrochoid
     # add X and Y values to corresponding arrays
     rotRadX[t] = (statRad - rotRad) * cos(angle) + drawPointRad * cos(((statRad - rotRad) / rotRad) * angle)
@@ -78,7 +82,7 @@ def update1():
 
     # draw curve
     #curve.setData(x=rotRadX[:t], y=rotRadY[:t])
-    curve.setData(rotRadX[:t],rotRadY[:t])
+    spiro.setData(rotRadX[:t],rotRadY[:t])
     # move calculation point clockwise theta
     angle+=theta  
     t += 1      
@@ -89,12 +93,9 @@ def update():
 
 # print plot after calculating all the points
 # p1.plot(rotRadX, rotRadY)
-
 timer = pg.QtCore.QTimer()
 timer.timeout.connect(update)
-timer.start(5)
-
-print ("done")
+timer.start(1)
 
 ## Start Qt event loop unless running in interactive mode or using pyside.
 if __name__ == '__main__':
