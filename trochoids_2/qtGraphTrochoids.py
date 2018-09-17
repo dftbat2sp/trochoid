@@ -12,12 +12,13 @@ win.resize(1000,1000)               # set window size
 # Circle sizes
 statRad = 120               # Stationary Circle size
 rotRad = 74                 # moving circle size
+circDiff = statRad - rotRad # difference between the two circles, finding the center of rolling circle
 drawPointRad = rotRad / 2     # location from center of moving circle to draw
 
 # Drawing paarameters
 startAngle = 0                       # starting angle
 theta = 0.05                    # distance in radians for each step
-oneRotation = int(3.14 / theta)        # number of steps for 1 full rotation
+oneRotation = int((2 / theta) + ((2 * np.pi) / theta))        # approx number of steps for 1 full rotation
 # should only need to do number of rotation less than the ratius of the
                                # stationary circle
 steps = int(statRad * oneRotation) 
@@ -28,29 +29,35 @@ axisRange = statRad + 50   # Axis label range
 statRadX = np.empty(steps) # array for x points
 statRadY = np.empty(steps) # corresponding y points
 
-# moving circle
-rotRadX = np.empty(steps) # array for x points
-rotRadY = np.empty(steps) # corresponding y points
+# moving circle point
+rollPointRadX = np.empty(steps) # array for x points
+rollPointRadY = np.empty(steps) # corresponding y points
+
+# rolling circle outline
+rollCircRadX = np.empty(oneRotation)
+rollCircRadY = np.empty(oneRotation)
+
+# rolling circle Line
+rollLineRadX = np.empty(2)
+rollLineRadY = np.empty(2)
 
 # set graph parameters
 p1 = win.addPlot(title="testing")           # title
-#p1.setDownsampling(mode='peak') # reduce drawing load
+p1.setDownsampling(mode='peak') # reduce drawing load
                                  #p1.setClipToView(True)
 p1.showGrid(x=True, y=True)                 # print grid
 p1.setRange(xRange=[-axisRange,axisRange],  # set axis range
             yRange=[-axisRange,axisRange])
 
-#don't know what this does yet, used for "live" drawing
-#curve = p1.plot()
+
+# reset where drawing starts
 angle = startAngle
+
 #print stationary circle
-bigCirc = pg.PlotCurveItem(pen=(1))
-p1.addItem(bigCirc)
-#bigCirc.setPos(0,0)
-
-maxRange = 10
-
-for t in range(0,maxRange):
+statCirc = pg.PlotCurveItem(pen=(1))
+p1.addItem(statCirc)
+#statCirc.setPos(0,0)
+for t in range(0,oneRotation):
     x = statRad * cos(angle)
     y = statRad * sin(angle)
     
@@ -60,42 +67,79 @@ for t in range(0,maxRange):
     angle += theta
 
 # draw stationary circle
-bigCirc.setData(x=statRadX[:maxRange], y=statRadY[:maxRange], connect="finite")
+statCirc.setData(x=statRadX[:oneRotation], y=statRadY[:oneRotation], connect="finite")
 
 # reset starting angle
 angle = startAngle
 
-# print fancy things
-spiro = pg.PlotCurveItem(pen=(2))
-p1.addItem(spiro)
-#for t in range(0,steps):
-data3 = np.empty(100)
-ptr3 = 0
+# object for printing curve
+rollPoint = pg.PlotCurveItem(pen=(2))
+p1.addItem(rollPoint)
+
+# object for printing rolling circle
+rollingCirc = pg.PlotCurveItem(pen=(3))
+p1.addItem(rollingCirc)
+
+# object for printing line from center of rolling circle to drawing point
+rollingLine = pg.PlotCurveItem(pen=(4))
+p1.addItem(rollingLine)
+
+# keeping track of rollPointRad's array index
 t = 0
 
-def update1():
-    global rotRadX, rotRadY, spiro, angle, ptr3, t
+def rollPointDraw():
+    global rollPointRadX, rollPointRadY, rollPoint, angle, t
     # hypotrochoid
     # add X and Y values to corresponding arrays
-    rotRadX[t] = (statRad - rotRad) * cos(angle) + drawPointRad * cos(((statRad - rotRad) / rotRad) * angle)
-    rotRadY[t] = (statRad - rotRad) * sin(angle) - drawPointRad * sin(((statRad - rotRad) / rotRad) * angle)
+    rollPointRadX[t] = (statRad - rotRad) * cos(angle) + drawPointRad * cos(((statRad - rotRad) / rotRad) * angle)
+    rollPointRadY[t] = (statRad - rotRad) * sin(angle) - drawPointRad * sin(((statRad - rotRad) / rotRad) * angle)
 
     # draw curve
-    #curve.setData(x=rotRadX[:t], y=rotRadY[:t])
-    spiro.setData(rotRadX[:t],rotRadY[:t])
-    # move calculation point clockwise theta
-    angle+=theta  
-    t += 1      
+    rollPoint.setData(rollPointRadX[:t],rollPointRadY[:t])
+
+def rollCircDraw():
+    global rollCircRadX, rollCircRadY, rollingCirc, circDiff, rotRad, angle, theta, rollingLine, rollLineRadX, rollLineRadY, t, rollPointRadX, rollPointRadY
+
+    #calculate center of rolling circle
+    centreX = circDiff * cos(angle)
+    centreY = circDiff * sin(angle)
+
+    rollLineRadX[0] = centreX
+    rollLineRadY[0] = centreY
+    rollLineRadX[1] = rollPointRadX[t]
+    rollLineRadY[1] = rollPointRadY[t]
+
+    rollingLine.setData(rollLineRadX[:2], rollLineRadY[:2])
+
+    for rotationStep in range(0,oneRotation):
+        # calculate theta (angle) value
+        thetaSmall = (rotationStep * theta)
+
+        # calculate point on circle of rollingCircle
+        x = centreX + (rotRad * cos(thetaSmall))
+        y = centreY + (rotRad * sin(thetaSmall))
+
+        rollCircRadX[rotationStep] = x
+        rollCircRadY[rotationStep] = y
+
+    rollingCirc.setData(rollCircRadX[:oneRotation], rollCircRadY[:oneRotation])
+
+
 
 def update():
-    update1()
-#sleep(0.05) # TEST
+    global angle, theta, t
+    rollPointDraw()
+    rollCircDraw()
 
-# print plot after calculating all the points
-# p1.plot(rotRadX, rotRadY)
+    # move calculation point anti-clockwise theta
+    angle+=theta
+
+    #increase step for arrays by one
+    t += 1      
+
 timer = pg.QtCore.QTimer()
 timer.timeout.connect(update)
-timer.start(1)
+timer.start(10)
 
 ## Start Qt event loop unless running in interactive mode or using pyside.
 if __name__ == '__main__':
