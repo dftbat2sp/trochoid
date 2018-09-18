@@ -1,11 +1,13 @@
+import pyqtgraph.opengl as gl
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtGui
 import numpy as np
-from math import cos,sin
+from math import cos,sin,ceil
 from time import sleep 
 
 
 win = pg.GraphicsWindow()           # create graphics window
+#win = gl.GLViewWidget()           # create graphics window
 win.setWindowTitle('Trochoids')     # set title
 win.resize(1000,1000)               # set window size
 
@@ -18,7 +20,7 @@ drawPointRad = rotRad / 2     # location from center of moving circle to draw
 # Drawing paarameters
 startAngle = 0                       # starting angle
 theta = 0.05                    # distance in radians for each step
-oneRotation = int((2 / theta) + ((2 * np.pi) / theta))        # approx number of steps for 1 full rotation
+oneRotation = int(ceil(1 + (2 * np.pi) / theta))        # approx number of steps for 1 full rotation
 # should only need to do number of rotation less than the ratius of the
                                # stationary circle
 steps = int(statRad * oneRotation) 
@@ -44,7 +46,7 @@ rollLineRadY = np.empty(2)
 # set graph parameters
 p1 = win.addPlot(title="testing")           # title
 p1.setDownsampling(mode='peak') # reduce drawing load
-                                 #p1.setClipToView(True)
+p1.setClipToView(True)
 p1.showGrid(x=True, y=True)                 # print grid
 p1.setRange(xRange=[-axisRange,axisRange],  # set axis range
             yRange=[-axisRange,axisRange])
